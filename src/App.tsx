@@ -1793,13 +1793,13 @@ const App: React.FC = () => {
   };
 
   const kembaliKePKBM = () => {
-  if (window.parent !== window.self) {
-    // kirim ke induk langsung, bukan ke halaman paling atas
-    window.parent.postMessage({ type: "PKBM_KEMBALI" }, "*");
-  } else {
-    window.location.href = "https://ajappai-v1.vercel.app/";
-  }
-};
+    if (window.top !== window.self) {
+      // Sedang berjalan di dalam iframe → minta halaman induk (picker) yang reset
+      window.top?.postMessage({ type: "PKBM_KEMBALI" }, "*");
+    } else {
+      window.location.href = "https://ajappai-v1.vercel.app/";
+    }
+  };
 
   const kembaliKeHalamanSebelumnya = () => {
     // Jika memilih peran Siswa → langsung ke link khusus siswa
